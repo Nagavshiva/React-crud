@@ -6,11 +6,7 @@ const Read = () => {
   const [APIData, setAPIData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(` https://62a8a253943591102ba70253.mockapi.io/user`)
-      .then((response) => {
-        setAPIData(response.data);
-      });
+    getData();
   }, []);
 
   const setData = (data) => {
@@ -38,34 +34,45 @@ const Read = () => {
     <div>
       <table>
         <thead>
-          <tr >
-            <th >First Name</th>
-            <th className="tables" >Last Name</th>
-            <th className="tables" >Checked</th>
-            <th className="tables" >Update</th>
-            <th className="tables" >Delete</th>
+          <tr>
+            <th>First Name</th>
+            <th className="tables">Last Name</th>
+            <th className="tables">Checked</th>
+            <th className="tables">Update</th>
+            <th className="tables">Delete</th>
           </tr>
         </thead>
-          {APIData.map((data) => {
-            return (
-              <tbody>
+        {APIData.map((data) => {
+          return (
+            <tbody key={data.tabe}>
               <tr>
-                <td >{data.firstName}</td>
+                <td>{data.firstName}</td>
                 <td className="tables">{data.lastName}</td>
-                <td className="tables">{data.checkbox ? "Checked" : "Unchecked"}</td>
-                  <td>
-                  <Link to="/update">
-                    <button className="btn btn-outline-info mx-2 " onClick={() => setData(data)}>Update</button>
-                    </Link>
-                  </td>
+                <td className="tables">
+                  {data.checkbox ? "Checked" : "Unchecked"}
+                </td>
                 <td>
-                  <button className="btn btn-outline-danger mx-2" onClick={() => onDelete(data.id)}>Delete</button>
+                  <Link to="/update">
+                    <button
+                      className="btn btn-outline-info mx-2 "
+                      onClick={() => setData(data)}
+                    >
+                      Update
+                    </button>
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger mx-2"
+                    onClick={() => onDelete(data.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
-              </tbody>
-            );
-          })}
-     
+            </tbody>
+          );
+        })}
       </table>
     </div>
   );

@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { Roll } from "react-awesome-reveal";
 
 const Update = () => {
-  
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [checkbox, setCheckbox] = useState(false);
@@ -22,17 +21,20 @@ const Update = () => {
 
   const updateAPIData = () => {
     if (firstName && lastName && checkbox && id) {
-      axios.put(`https://62a8a253943591102ba70253.mockapi.io/user/${id}`, {
-        firstName,
-        lastName,
-        checkbox,
-      });
-      toast.success("Success Notification !", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-      navigate("/read");
+      axios
+        .put(`https://62a8a253943591102ba70253.mockapi.io/user/${id}`, {
+          firstName,
+          lastName,
+          checkbox,
+        })
+        .then(() => {
+          toast.success("Updated Successfully!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          navigate("/read");
+        });
     } else {
-      toast.error("Error Notification !", {
+      toast.error("Please fill out all the fields.", {
         position: toast.POSITION.TOP_LEFT,
       });
     }
@@ -65,7 +67,13 @@ const Update = () => {
             />
           </Form.Field>
         </Roll>
-        <Button className="my-4" type="submit" inverted color="pink" onClick={updateAPIData}>
+        <Button
+          className="my-4"
+          type="submit"
+          inverted
+          color="pink"
+          onClick={updateAPIData}
+        >
           Update
         </Button>
       </Form>
